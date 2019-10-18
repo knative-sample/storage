@@ -1,0 +1,19 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: nas-pv-test
+spec:
+  template:
+    spec:
+      containers:
+        - image: registry.cn-hangzhou.aliyuncs.com/knative-sample/helloworld-go:160e4db7
+          volumeMounts:
+          - name: persistent-storage
+            mountPath: /nfs-pvc
+          env:
+          - name: foo
+            value: bar
+      volumes:
+      - name: persistent-storage
+        persistentVolumeClaim:
+          claimName: nfs-pvc
